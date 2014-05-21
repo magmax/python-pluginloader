@@ -31,6 +31,16 @@ class plugins_in_file(unittest.TestCase):
         self.assertIsInstance(sut.plugins['Foo'], object)
         self.assertEquals('Foo', sut.plugins['Foo'].__class__.__name__)
 
+    def test_ignorable_classes(self):
+        self.plugin_file.write('class Foo(object): pass')
+        self.plugin_file.flush()
+        sut = PluginLoader()
+
+        sut.load_file(self.plugin_file.name, onlyif=lambda x, y: False)
+
+        self.assertEquals({}, sut.plugins)
+
+
 
 @unittest.skip('Not ready yet')
 class plugins_in_directory(unittest.TestCase):
