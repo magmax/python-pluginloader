@@ -65,17 +65,3 @@ class plugins_in_file(unittest.TestCase):
         sut.load_file(self.plugin_file.name, kwargs={'a': 5})
 
         self.assertEquals(5, sut.plugins['Foo'].a)
-
-
-@unittest.skip('Not ready yet')
-class plugins_in_directory(unittest.TestCase):
-    def setUp(self):
-        self.plugin_dir = tempfile.mkdtemp()
-
-    def tearDown(self):
-        shutil.rmtree(self.plugin_dir)
-
-    def test_load_file(self):
-        sut = PluginLoader()
-
-        sut.load_all()
