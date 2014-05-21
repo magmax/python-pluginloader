@@ -40,6 +40,32 @@ class plugins_in_file(unittest.TestCase):
 
         self.assertEquals({}, sut.plugins)
 
+    def test_parameters_for_constructor(self):
+        self.plugin_file.write(
+            'class Foo(object):\n'
+            '  def __init__(self, a):\n'
+            '    self.a = a'
+            )
+        self.plugin_file.flush()
+        sut = PluginLoader()
+
+        sut.load_file(self.plugin_file.name, args=[5])
+
+        self.assertEquals(5, sut.plugins['Foo'].a)
+
+    def test_namedparameters_for_constructor(self):
+        self.plugin_file.write(
+            'class Foo(object):\n'
+            '  def __init__(self, a):\n'
+            '    self.a = a'
+            )
+        self.plugin_file.flush()
+        sut = PluginLoader()
+
+        sut.load_file(self.plugin_file.name, kwargs={'a': 5})
+
+        self.assertEquals(5, sut.plugins['Foo'].a)
+
 
 
 @unittest.skip('Not ready yet')
