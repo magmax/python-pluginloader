@@ -67,7 +67,6 @@ class plugins_in_file(unittest.TestCase):
         self.assertEquals(5, sut.plugins['Foo'].a)
 
 
-
 @unittest.skip('Not ready yet')
 class plugins_in_directory(unittest.TestCase):
     def setUp(self):

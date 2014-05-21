@@ -15,7 +15,7 @@ class PluginLoader(object):
 
         for name, clazz in context.iteritems():
             if (isinstance(clazz, type)
-                and self._apply_condition(onlyif, name, clazz)):
+                    and self._apply_condition(onlyif, name, clazz)):
                 self.plugins[name] = clazz(*args, **kwargs)
 
     def _apply_condition(self, condition, *args, **kwargs):
