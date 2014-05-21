@@ -12,7 +12,5 @@ class PluginLoader(object):
             exec(fd.read(), context)
 
         for name, clazz in context.iteritems():
-            print '**', name, type(clazz)
-
             if isinstance(clazz, type):
                 self.plugins[name] = clazz()

@@ -23,13 +23,13 @@ class plugins_in_file(unittest.TestCase):
     def test_base_case(self):
         self.plugin_file.write('class Foo(object): pass')
         self.plugin_file.flush()
-        self.plugin_file.seek(0)
-        print self.plugin_file.read()
         sut = PluginLoader()
 
         sut.load_file(self.plugin_file.name)
 
         self.assertEquals(['Foo'], sut.plugins.keys())
+        self.assertIsInstance(sut.plugins['Foo'], object)
+        self.assertEquals('Foo', sut.plugins['Foo'].__class__.__name__)
 
 
 @unittest.skip('Not ready yet')
