@@ -65,16 +65,27 @@ This is a simple module with a simple API. It just contains one class, :code:`Pl
 :code:`load_file(filename, onlyif=None)`
 ////////////////////////////////////////
 
+Loads all plugins in a file.
+
 Parameters:
 
 - ``filename``: File name to be loaded.
 - ``onlyif``: Value or function that will be called with each class found. It will skip the plugin if this function returns :code:`False`.
 
 
-:code:`load_directory(path, onlyif=None)`
-////////////////////////////////////////
+:code:`load_directory(path, onlyif=None, recursive=False))`
+///////////////////////////////////////////////////////////
 
-TO BE DONE
+Loads all plugins in a directory.
+
+Parameters:
+
+- ``path``: Path where plugins are in.
+- ``onlyif``: Value or function that will be called with each class found. It will skip the plugin if this function returns :code:`False`.
+- ``recursive``: Boolean value to allow recursive read of directories.
+
+Links will always be ignored.
+
 
 License
 =======

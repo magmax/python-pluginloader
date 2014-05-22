@@ -62,3 +62,21 @@ class plugins_in_directory(unittest.TestCase):
         sut.load_directory(self.plugin_dir, recursive=True)
 
         self.assertEquals(['Bazz'], sut.plugins.keys())
+
+    def test_recursive_mode_off(self):
+        self._create_dir('foo')
+        self._create('bar.py', 'class Bazz(object): pass', 'foo')
+        sut = PluginLoader()
+
+        sut.load_directory(self.plugin_dir, recursive=False)
+
+        self.assertEquals({}, sut.plugins)
+
+    def test_link_recursive(self):
+        os.symlink(self.plugin_dir, os.path.join(self.plugin_dir, 'foo'))
+
+        sut = PluginLoader()
+
+        sut.load_directory(self.plugin_dir, recursive=True)
+
+        self.assertEquals({}, sut.plugins)

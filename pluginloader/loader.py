@@ -27,9 +27,11 @@ class PluginLoader(object):
     def load_directory(self, path, onlyif=None, recursive=False):
         for filename in os.listdir(path):
             full_path = os.path.join(path, filename)
+
             if os.path.isfile(full_path):
                 self.load_file(full_path, onlyif)
-            elif os.path.isdir(full_path):
+                continue
+            if os.path.isdir(full_path):
                 if recursive:
                     self.load_directory(full_path, onlyif, recursive)
 
