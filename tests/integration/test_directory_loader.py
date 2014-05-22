@@ -17,4 +17,4 @@ class plugins_in_directory(unittest.TestCase):
     def test_load_file(self):
         sut = PluginLoader()
 
-        sut.load_all()
+        sut.load_directory()
