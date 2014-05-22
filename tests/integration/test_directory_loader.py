@@ -17,7 +17,7 @@ class plugins_in_directory(unittest.TestCase):
         path = (self.plugin_dir
                 if path is None
                 else os.path.join(self.plugin_dir, path))
-        with file(os.path.join(path, filename), 'w+') as fd:
+        with open(os.path.join(path, filename), 'w+') as fd:
             fd.write(content)
 
     def _create_dir(self, path):
