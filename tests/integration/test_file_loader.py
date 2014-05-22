@@ -3,7 +3,7 @@ import os
 import shutil
 import tempfile
 
-from pluginloader.loader import PluginLoader
+from pluginloader import PluginLoader
 
 
 class plugins_in_file(unittest.TestCase):
