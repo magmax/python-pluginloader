@@ -24,6 +24,9 @@ class PluginLoader(object):
             if (self._apply_condition(onlyif, name, clazz)):
                 self.plugins[name] = PluginFactory(clazz)
 
+    def load_directory(self, path):
+        pass
+
     def _apply_condition(self, condition, *args, **kwargs):
         if callable(condition):
             return condition(*args, **kwargs)

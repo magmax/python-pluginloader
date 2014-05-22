@@ -57,6 +57,24 @@ We can have an object of that class just with:
 
 Simple and easy.
 
+API
+---
+
+This is a simple module with a simple API. It just contains one class, :code:`PluginLoader`, with these public methods:
+
+:code:`load_file(filename, onlyif=None)`
+////////////////////////////////////////
+
+Parameters:
+
+- ``filename``: File name to be loaded.
+- ``onlyif``: Value or function that will be called with each class found. It will skip the plugin if this function returns :code:`False`.
+
+
+:code:`load_directory(path, onlyif=None)`
+////////////////////////////////////////
+
+TO BE DONE
 
 License
 =======
