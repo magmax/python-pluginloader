@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# import os
+import os
 
 
 class PluginFactory(object):
@@ -25,7 +25,9 @@ class PluginLoader(object):
                 self.plugins[name] = PluginFactory(clazz)
 
     def load_directory(self, path):
-        pass
+        for filename in os.listdir(path):
+            full_path = os.path.join(path, filename)
+            self.load_file(full_path)
 
     def _apply_condition(self, condition, *args, **kwargs):
         if callable(condition):
