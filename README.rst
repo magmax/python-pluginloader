@@ -9,6 +9,13 @@ Goal and Philosophy
 
 **Pluginloader** is a library to allow an easy way to **load plugins**. They can be managed by interfaces or just method validators.
 
+Features
+--------
+
+- It will **instantiate** each plugin found.
+- **Customizable filter** to select if a class should be loaded as a plugin.
+- **Sandboxed**: plugins cannot access the main program or other plugins by default, because they are loaded in isolated environments.
+
 
 Documentation
 =============
@@ -20,8 +27,34 @@ Two options: to install it in your system/project::
 
     pip install pluginloader
 
+Usage
+-----
 
+You can load all plugins in a file, just doing:
 
+.. code:: python
+
+    loader = PluginLoader()
+    plugins = loader.load_file('plugins.py')
+
+With those simple lines you will have in the variable :code:`plugins` a dictionary with each class inside the ``plugins.py`` file as key and a factory as value.
+
+Let's see an example. Using the ``plugins.py`` file:
+
+.. code:: python
+
+    class Foo(object):
+        pass
+
+We can have an object of that class just with:
+
+.. code:: python
+
+    loader = PluginLoader()
+    plugins = loader.load_file('plugins.py')
+    instance = plugins['Foo']()
+
+Simple and easy.
 
 
 License

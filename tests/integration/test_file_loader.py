@@ -29,7 +29,7 @@ class plugins_in_file(unittest.TestCase):
 
         self.assertEquals(['Foo'], sut.plugins.keys())
         self.assertIsInstance(sut.plugins['Foo'], object)
-        self.assertEquals('Foo', sut.plugins['Foo'].__class__.__name__)
+        self.assertEquals('Foo', sut.plugins['Foo']().__class__.__name__)
 
     def test_ignorable_classes(self):
         self.plugin_file.write('class Foo(object): pass')
@@ -56,7 +56,7 @@ class plugins_in_file(unittest.TestCase):
 
         sut.load_file(self.plugin_file.name, onlyif=True)
 
-        self.assertEquals(['Foo'], sut.plugins.keys())
+        self.assertItemsEqual(['__builtins__', 'Foo'], sut.plugins.keys())
 
     def test_parameters_for_constructor(self):
         self.plugin_file.write(
@@ -67,9 +67,10 @@ class plugins_in_file(unittest.TestCase):
         self.plugin_file.flush()
         sut = PluginLoader()
 
-        sut.load_file(self.plugin_file.name, args=[5])
+        sut.load_file(self.plugin_file.name)
 
-        self.assertEquals(5, sut.plugins['Foo'].a)
+        plugin = sut.plugins['Foo'](5)
+        self.assertEquals(5, plugin.a)
 
     def test_named_parameters_for_constructor(self):
         self.plugin_file.write(
@@ -80,22 +81,11 @@ class plugins_in_file(unittest.TestCase):
         self.plugin_file.flush()
         sut = PluginLoader()
 
-        sut.load_file(self.plugin_file.name, kwargs={'a': 5})
+        sut.load_file(self.plugin_file.name)
 
-        self.assertEquals(5, sut.plugins['Foo'].a)
+        plugin = sut.plugins['Foo'](a=5)
 
-    def test_adding_vars_to_globals(self):
-        self.plugin_file.write(
-            'class Foo(object):\n'
-            '  def __init__(self):\n'
-            '    self.a = b'
-            )
-        self.plugin_file.flush()
-        sut = PluginLoader()
-
-        sut.load_file(self.plugin_file.name, global_env={'b': 8})
-
-        self.assertEquals(8, sut.plugins['Foo'].a)
+        self.assertEquals(5, plugin.a)
 
     def test_two_plugins_in_a_file(self):
         self.plugin_file.write(
@@ -110,5 +100,5 @@ class plugins_in_file(unittest.TestCase):
         sut.load_file(self.plugin_file.name)
 
         self.assertItemsEqual(['Foo', 'Bar'], sut.plugins.keys())
-        self.assertEquals('Foo', sut.plugins['Foo'].__class__.__name__)
-        self.assertEquals('Bar', sut.plugins['Bar'].__class__.__name__)
+        self.assertEquals('Foo', sut.plugins['Foo']().__class__.__name__)
+        self.assertEquals('Bar', sut.plugins['Bar']().__class__.__name__)
