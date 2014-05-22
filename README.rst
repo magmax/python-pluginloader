@@ -12,7 +12,7 @@ Goal and Philosophy
 Features
 --------
 
-- It will **instantiate** each plugin found.
+- Each plugin can be instanciated **several times**.
 - **Customizable filter** to select if a class should be loaded as a plugin.
 - **Sandboxed**: plugins cannot access the main program or other plugins by default, because they are loaded in isolated environments.
 
@@ -52,7 +52,8 @@ We can have an object of that class just with:
 
     loader = PluginLoader()
     plugins = loader.load_file('plugins.py')
-    instance = plugins['Foo']()
+    instance1 = plugins['Foo']()
+    instance2 = plugins['Foo']()
 
 Simple and easy.
 
