@@ -24,10 +24,14 @@ class PluginLoader(object):
             if (self._apply_condition(onlyif, name, clazz)):
                 self.plugins[name] = PluginFactory(clazz)
 
-    def load_directory(self, path):
+    def load_directory(self, path, onlyif=None, recursive=False):
         for filename in os.listdir(path):
             full_path = os.path.join(path, filename)
-            self.load_file(full_path)
+            if os.path.isfile(full_path):
+                self.load_file(full_path, onlyif)
+            elif os.path.isdir(full_path):
+                if recursive:
+                    self.load_directory(full_path, onlyif, recursive)
 
     def _apply_condition(self, condition, *args, **kwargs):
         if callable(condition):
