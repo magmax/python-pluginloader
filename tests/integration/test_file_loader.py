@@ -13,6 +13,9 @@ class plugins_in_file(unittest.TestCase):
     def tearDown(self):
         self.plugin_file.close()
 
+    def _write_file(self, content):
+        self.plugin_file.write(content.encode('utf-8'))
+
     def test_load_empty_file(self):
         sut = PluginLoader()
 
@@ -21,7 +24,7 @@ class plugins_in_file(unittest.TestCase):
         self.assertEquals({}, sut.plugins)
 
     def test_base_case(self):
-        self.plugin_file.write('class Foo(object): pass')
+        self._write_file('class Foo(object): pass')
         self.plugin_file.flush()
         sut = PluginLoader()
 
@@ -32,7 +35,7 @@ class plugins_in_file(unittest.TestCase):
         self.assertEquals('Foo', sut.plugins['Foo']().__class__.__name__)
 
     def test_ignorable_classes(self):
-        self.plugin_file.write('class Foo(object): pass')
+        self._write_file('class Foo(object): pass')
         self.plugin_file.flush()
         sut = PluginLoader()
 
@@ -41,7 +44,7 @@ class plugins_in_file(unittest.TestCase):
         self.assertEquals({}, sut.plugins)
 
     def test_ignorable_classes_with_variable_false(self):
-        self.plugin_file.write('class Foo(object): pass')
+        self._write_file('class Foo(object): pass')
         self.plugin_file.flush()
         sut = PluginLoader()
 
@@ -50,7 +53,7 @@ class plugins_in_file(unittest.TestCase):
         self.assertEquals([], sut.plugins.keys())
 
     def test_ignorable_classes_with_variable_true(self):
-        self.plugin_file.write('class Foo(object): pass')
+        self._write_file('class Foo(object): pass')
         self.plugin_file.flush()
         sut = PluginLoader()
 
@@ -59,7 +62,7 @@ class plugins_in_file(unittest.TestCase):
         self.assertItemsEqual(['__builtins__', 'Foo'], sut.plugins.keys())
 
     def test_parameters_for_constructor(self):
-        self.plugin_file.write(
+        self._write_file(
             'class Foo(object):\n'
             '  def __init__(self, a):\n'
             '    self.a = a'
@@ -73,7 +76,7 @@ class plugins_in_file(unittest.TestCase):
         self.assertEquals(5, plugin.a)
 
     def test_named_parameters_for_constructor(self):
-        self.plugin_file.write(
+        self._write_file(
             'class Foo(object):\n'
             '  def __init__(self, a):\n'
             '    self.a = a'
@@ -88,7 +91,7 @@ class plugins_in_file(unittest.TestCase):
         self.assertEquals(5, plugin.a)
 
     def test_two_plugins_in_a_file(self):
-        self.plugin_file.write(
+        self._write_file(
             'class Foo(object):\n'
             '  pass\n'
             'class Bar(object):\n'

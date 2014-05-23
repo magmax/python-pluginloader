@@ -24,7 +24,7 @@ class PluginLoader(object):
         with open(filename) as fd:
             exec(fd.read(), context)
 
-        for name, clazz in context.iteritems():
+        for name, clazz in context.items():
             if (self._apply_condition(onlyif, name, clazz)):
                 self.plugins[name] = PluginFactory(clazz)
 
