@@ -59,7 +59,8 @@ class plugins_in_file(unittest.TestCase):
 
         sut.load_file(self.plugin_file.name, onlyif=True)
 
-        self.assertEqual(['__builtins__', 'Foo'], list(sut.plugins.keys()))
+        self.assertEqual(sorted(['__builtins__', 'Foo']),
+                         sorted(list(sut.plugins.keys())))
 
     def test_parameters_for_constructor(self):
         self._write_file(
@@ -102,6 +103,7 @@ class plugins_in_file(unittest.TestCase):
 
         sut.load_file(self.plugin_file.name)
 
-        self.assertEqual(['Foo', 'Bar'], list(sut.plugins.keys()))
+        self.assertEqual(sorted(['Foo', 'Bar']),
+                         sorted(list(sut.plugins.keys())))
         self.assertEqual('Foo', sut.plugins['Foo']().__class__.__name__)
         self.assertEqual('Bar', sut.plugins['Bar']().__class__.__name__)
