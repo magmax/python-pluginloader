@@ -36,7 +36,7 @@ class plugins_in_directory(unittest.TestCase):
 
         sut.load_directory(self.plugin_dir)
 
-        self.assertEqual(['Foo'], sut.plugins.keys())
+        self.assertEqual(['Foo'], list(sut.plugins.keys()))
 
     def test_ignorable_classes(self):
         self._create('foo.py', 'class Foo(object): pass')
@@ -44,7 +44,7 @@ class plugins_in_directory(unittest.TestCase):
 
         sut.load_directory(self.plugin_dir, onlyif=lambda x, y: False)
 
-        self.assertEquals({}, sut.plugins)
+        self.assertEqual({}, sut.plugins)
 
     def test_containing_directories(self):
         self._create_dir('foo')
@@ -52,7 +52,7 @@ class plugins_in_directory(unittest.TestCase):
 
         sut.load_directory(self.plugin_dir)
 
-        self.assertEquals({}, sut.plugins)
+        self.assertEqual({}, sut.plugins)
 
     def test_recursive_mode(self):
         self._create_dir('foo')
@@ -61,7 +61,7 @@ class plugins_in_directory(unittest.TestCase):
 
         sut.load_directory(self.plugin_dir, recursive=True)
 
-        self.assertEquals(['Bazz'], sut.plugins.keys())
+        self.assertEqual(['Bazz'], list(sut.plugins.keys()))
 
     def test_recursive_mode_off(self):
         self._create_dir('foo')
@@ -70,7 +70,7 @@ class plugins_in_directory(unittest.TestCase):
 
         sut.load_directory(self.plugin_dir, recursive=False)
 
-        self.assertEquals({}, sut.plugins)
+        self.assertEqual({}, sut.plugins)
 
     def test_link_recursive(self):
         os.symlink(self.plugin_dir, os.path.join(self.plugin_dir, 'foo'))
@@ -79,4 +79,4 @@ class plugins_in_directory(unittest.TestCase):
 
         sut.load_directory(self.plugin_dir, recursive=True)
 
-        self.assertEquals({}, sut.plugins)
+        self.assertEqual({}, sut.plugins)

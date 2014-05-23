@@ -50,7 +50,7 @@ class plugins_in_file(unittest.TestCase):
 
         sut.load_file(self.plugin_file.name, onlyif=False)
 
-        self.assertEquals([], sut.plugins.keys())
+        self.assertEqual([], list(sut.plugins.keys()))
 
     def test_ignorable_classes_with_variable_true(self):
         self._write_file('class Foo(object): pass')
@@ -59,7 +59,7 @@ class plugins_in_file(unittest.TestCase):
 
         sut.load_file(self.plugin_file.name, onlyif=True)
 
-        self.assertItemsEqual(['__builtins__', 'Foo'], sut.plugins.keys())
+        self.assertEqual(['__builtins__', 'Foo'], list(sut.plugins.keys()))
 
     def test_parameters_for_constructor(self):
         self._write_file(
@@ -73,7 +73,7 @@ class plugins_in_file(unittest.TestCase):
         sut.load_file(self.plugin_file.name)
 
         plugin = sut.plugins['Foo'](5)
-        self.assertEquals(5, plugin.a)
+        self.assertEqual(5, plugin.a)
 
     def test_named_parameters_for_constructor(self):
         self._write_file(
@@ -88,7 +88,7 @@ class plugins_in_file(unittest.TestCase):
 
         plugin = sut.plugins['Foo'](a=5)
 
-        self.assertEquals(5, plugin.a)
+        self.assertEqual(5, plugin.a)
 
     def test_two_plugins_in_a_file(self):
         self._write_file(
@@ -102,6 +102,6 @@ class plugins_in_file(unittest.TestCase):
 
         sut.load_file(self.plugin_file.name)
 
-        self.assertItemsEqual(['Foo', 'Bar'], sut.plugins.keys())
-        self.assertEquals('Foo', sut.plugins['Foo']().__class__.__name__)
-        self.assertEquals('Bar', sut.plugins['Bar']().__class__.__name__)
+        self.assertEqual(['Foo', 'Bar'], list(sut.plugins.keys()))
+        self.assertEqual('Foo', sut.plugins['Foo']().__class__.__name__)
+        self.assertEqual('Bar', sut.plugins['Bar']().__class__.__name__)
