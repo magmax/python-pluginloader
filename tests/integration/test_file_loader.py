@@ -30,7 +30,7 @@ class plugins_in_file(unittest.TestCase):
 
         sut.load_file(self.plugin_file.name)
 
-        self.assertEquals(['Foo'], sut.plugins.keys())
+        self.assertEquals(['Foo'], list(sut.plugins.keys()))
         self.assertIsInstance(sut.plugins['Foo'], object)
         self.assertEquals('Foo', sut.plugins['Foo']().__class__.__name__)
 
