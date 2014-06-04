@@ -117,7 +117,7 @@ class plugins_in_file(unittest.TestCase):
         sut = PluginLoader()
 
         sut.load_file(self.plugin_file.name,
-                      onlyif=False,
                       context={'Bar': Pattern})
 
-        self.assertEquals([], sut.plugins.keys())
+        self.assertEqual(sorted(['Foo', 'Bar']),
+                         sorted(list(sut.plugins.keys())))

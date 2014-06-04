@@ -90,4 +90,5 @@ class plugins_in_directory(unittest.TestCase):
 
         sut.load_directory(self.plugin_dir, context={'Bar': Pattern})
 
-        self.assertEqual(['Foo', 'Bar'], sut.plugins.keys())
+        self.assertEqual(sorted(['Foo', 'Bar']),
+                         sorted(list(sut.plugins.keys())))
