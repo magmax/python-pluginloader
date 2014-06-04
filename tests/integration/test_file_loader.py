@@ -107,3 +107,17 @@ class plugins_in_file(unittest.TestCase):
                          sorted(list(sut.plugins.keys())))
         self.assertEqual('Foo', sut.plugins['Foo']().__class__.__name__)
         self.assertEqual('Bar', sut.plugins['Bar']().__class__.__name__)
+
+    def test_adding_context(self):
+        class Pattern(object):
+            pass
+
+        self.plugin_file.write('class Foo(Bar): pass')
+        self.plugin_file.flush()
+        sut = PluginLoader()
+
+        sut.load_file(self.plugin_file.name,
+                      onlyif=False,
+                      context={'Bar': Pattern})
+
+        self.assertEquals([], sut.plugins.keys())

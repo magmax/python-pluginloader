@@ -80,3 +80,14 @@ class plugins_in_directory(unittest.TestCase):
         sut.load_directory(self.plugin_dir, recursive=True)
 
         self.assertEqual({}, sut.plugins)
+
+    def test_use_context(self):
+        class Pattern(object):
+            pass
+
+        self._create('foo.py', 'class Foo(Bar): pass')
+        sut = PluginLoader()
+
+        sut.load_directory(self.plugin_dir, context={'Bar': Pattern})
+
+        self.assertEqual(['Foo', 'Bar'], sut.plugins.keys())

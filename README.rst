@@ -15,6 +15,7 @@ Features
 - Each plugin can be instanciated **several times**.
 - **Customizable filter** to select if a class should be loaded as a plugin.
 - **Sandboxed**: plugins cannot access the main program or other plugins by default, because they are loaded in isolated environments.
+- **Parameterizable context**: Sometimes you need to pass some classes, functions or variables preloaded to the plugins. It is possible and easy.
 
 
 Documentation
@@ -62,8 +63,8 @@ API
 
 This is a simple module with a simple API. It just contains one class, :code:`PluginLoader`, with these public methods:
 
-:code:`load_file(filename, onlyif=None)`
-////////////////////////////////////////
+:code:`load_file(filename, onlyif=None, context=None)`
+//////////////////////////////////////////////////////
 
 Loads all plugins in a file.
 
@@ -71,6 +72,7 @@ Parameters:
 
 - ``filename``: File name to be loaded.
 - ``onlyif``: Value or function that will be called with each class found. It will skip the plugin if this function returns :code:`False`.
+- ``context``: Dict with the context where the method should be loaded in. It usually will map a class, function or variable name to the class, function or value in the main program, so it can be used within the plugin.
 
 
 :code:`load_directory(path, onlyif=None, recursive=False))`
@@ -83,6 +85,7 @@ Parameters:
 - ``path``: Path where plugins are in.
 - ``onlyif``: Value or function that will be called with each class found. It will skip the plugin if this function returns :code:`False`.
 - ``recursive``: Boolean value to allow recursive read of directories.
+- ``context``: Dict with the context where the method should be loaded in.
 
 Links will always be ignored.
 
