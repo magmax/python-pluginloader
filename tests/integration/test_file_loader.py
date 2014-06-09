@@ -123,7 +123,7 @@ class plugins_in_file(unittest.TestCase):
                          sorted(list(sut.plugins.keys())))
 
     def test_binary_files_are_ignored(self):
-        self.plugin_file.write('\0\1\2\3\4\5\6\7')
+        self.plugin_file.write(b'\0\1\2\3\4\5\6\7')
         self.plugin_file.flush()
         sut = PluginLoader()
 
