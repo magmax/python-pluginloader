@@ -112,7 +112,7 @@ class plugins_in_file(unittest.TestCase):
         class Pattern(object):
             pass
 
-        self.plugin_file.write('class Foo(Bar): pass')
+        self.plugin_file.write(b'class Foo(Bar): pass')
         self.plugin_file.flush()
         sut = PluginLoader()
 
