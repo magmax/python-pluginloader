@@ -29,7 +29,7 @@ class PluginLoader(object):
                 exec(fd.read(), context)
 
             for name, clazz in context.items():
-                if (self._apply_condition(onlyif, name, clazz)):
+                if (self._apply_condition(onlyif, name, clazz, filename)):
                     self.plugins[name] = PluginFactory(clazz)
         except:
             logger.exception('Error loading file %s. Ignored' % filename)
@@ -45,10 +45,10 @@ class PluginLoader(object):
                 if recursive:
                     self.load_directory(full_path, onlyif, recursive, context)
 
-    def _apply_condition(self, condition, *args, **kwargs):
+    def _apply_condition(self, condition, obj_name, class_name, file_name):
         if callable(condition):
-            return condition(*args, **kwargs)
+            return condition(obj_name, class_name, file_name)
         return condition
 
-    def _default_condition(self, name, clazz):
-        return isinstance(clazz, type)
+    def _default_condition(self, obj_name, class_name, file_name):
+        return isinstance(class_name, type)

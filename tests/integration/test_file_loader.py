@@ -39,9 +39,18 @@ class plugins_in_file(unittest.TestCase):
         self.plugin_file.flush()
         sut = PluginLoader()
 
-        sut.load_file(self.plugin_file.name, onlyif=lambda x, y: False)
+        sut.load_file(self.plugin_file.name, onlyif=lambda x, y, z: False)
 
         self.assertEquals({}, sut.plugins)
+
+    def test_not_ignorable_classes(self):
+        self._write_file('class Foo(object): pass')
+        self.plugin_file.flush()
+        sut = PluginLoader()
+
+        sut.load_file(self.plugin_file.name, onlyif=lambda x, y, z: True)
+
+        self.assertEquals('Foo', sut.plugins['Foo']().__class__.__name__)
 
     def test_ignorable_classes_with_variable_false(self):
         self._write_file('class Foo(object): pass')

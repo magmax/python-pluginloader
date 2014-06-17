@@ -89,6 +89,17 @@ Parameters:
 
 Links will always be ignored.
 
+The :code:`onlyif` functions have this format:
+
+.. code:: python
+
+    def condition(obj_name, class_name, file_name)
+
+where:
+- ``obj_name`` is the name of the object. It can be a variable, function, class or instance.
+- ``class_name`` is the class of the object.
+- ``file_name`` is the file where the object has been declared.
+
 
 License
 =======
